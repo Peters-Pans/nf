@@ -729,8 +729,6 @@ function CheckV6() {
             if [ -n  "$check6"  ]; then
                 echo ""
                 echo ""
-                echo -e " ${Font_SkyBlue}** Checking Results Under IPv6${Font_Suffix} "
-                echo "--------------------------------"
                 echo -e " ${Font_SkyBlue}** Your Network Provider: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
                 isv6=1
             else
@@ -750,9 +748,7 @@ function CheckV6() {
             if [ -n  "$check6"  ]; then
                 echo ""
                 echo ""
-                echo -e " ${Font_SkyBlue}** 正在测试IPv6解锁情况${Font_Suffix} "
-                echo "--------------------------------"
-                echo -e " ${Font_SkyBlue}** 您的网络为: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
+                echo -e " ${Font_SkyBlue}当前网络为: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
                 isv6=1
             else
                 echo -e "${Font_SkyBlue}当前主机不支持IPv6,跳过...${Font_Suffix}"
@@ -766,7 +762,7 @@ clear
 
 function RunScript() {
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV6
             if [[ "$isv6" -eq 1 ]]; then
                 Global_UnlockTest 6
