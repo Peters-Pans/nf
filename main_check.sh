@@ -457,23 +457,10 @@ function Global_UnlockTest() {
         )
     fi
     wait
-    local array=("Disney+:" "Netflix:" )
+    local array=("Disney+:" "Netflix:")
     echo_Result ${result} ${array}
 }
 
-function SA_UnlockTest() {
-    echo "===========[ South America ]==========="
-    local result=$(
-    MediaUnlockTest_StarPlus ${1} &
-    MediaUnlockTest_HBOMax ${1} &
-    MediaUnlockTest_DirecTVGO ${1} &
-    MediaUnlockTest_Funimation ${1} &
-    )
-    wait
-    local array=("Star+:" "HBO Max:" "DirecTV Go:" "Funimation:")
-    echo_Result ${result} ${array}
-    echo "======================================="
-}
 
 function Openai_UnlockTest() {
     echo "==============[ Openai ]==============="
