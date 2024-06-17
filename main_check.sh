@@ -489,8 +489,7 @@ function RunScript() {
             #ScriptTitle
             CheckV6
             if [[ "$isv6" -eq 1 ]]; then
-	    	MediaUnlockTest_Netflix
-                #Global_UnlockTest 6
+                Global_UnlockTest 6
                 #SEA_UnlockTest 6
             fi
         #clear
