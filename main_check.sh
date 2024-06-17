@@ -483,13 +483,12 @@ function CheckV6() {
 }
 
 clear
-
 function RunScript() {
             clear
             #ScriptTitle
             CheckV6
             if [[ "$isv6" -eq 1 ]]; then
-                Global_UnlockTest 6
+        	Global_UnlockTest 6
                 #SEA_UnlockTest 6
             fi
         #clear
