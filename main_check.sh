@@ -444,62 +444,18 @@ function TW_UnlockTest() {
     echo "======================================="
 }
 
-function JP_UnlockTest() {
-    echo "===============[ Japan ]==============="
-    local result=$(
-    MediaUnlockTest_NHKPlus ${1} &
-    MediaUnlockTest_DMMTV ${1} &
-    MediaUnlockTest_AbemaTV_IPTest ${1} &
-    MediaUnlockTest_Niconico ${1} &
-    MediaUnlockTest_music.jp ${1} &
-    MediaUnlockTest_Telasa ${1} &
-    MediaUnlockTest_Paravi ${1} &
-    MediaUnlockTest_unext ${1} &
-    MediaUnlockTest_HuluJP ${1} &
-    )
-    wait
-    local array=("NHK+" "DMM TV:" "Abema.TV:" "Niconico:" "music.jp:" "Telasa:" "Paravi:" "U-NEXT:" "Hulu Japan:")
-    echo_Result ${result} ${array}
-    local result=$(
-    MediaUnlockTest_TVer ${1} &
-    MediaUnlockTest_wowow ${1} &
-    MediaUnlockTest_VideoMarket ${1} &
-    MediaUnlockTest_FOD ${1} &
-    MediaUnlockTest_Radiko ${1} &
-    MediaUnlockTest_DAM ${1} &
-    MediaUnlockTest_J:COM_ON_DEMAND ${1} &
-    )
-    wait
-    local array=("TVer:" "WOWOW:" "VideoMarket:" "FOD(Fuji TV):" "Radiko:" "Karaoke@DAM:" "J:com On Demand:")
-    echo_Result ${result} ${array}
-    ShowRegion Game
-    local result=$(
-    MediaUnlockTest_Kancolle ${1} &
-    MediaUnlockTest_UMAJP ${1} &
-    MediaUnlockTest_KonosubaFD ${1} &
-    MediaUnlockTest_PCRJP ${1} &
-    MediaUnlockTest_WFJP ${1} &
-    MediaUnlockTest_ProjectSekai ${1} &
-    )
-    wait
-    local array=("Kancolle Japan:" "Pretty Derby Japan:" "Konosuba Fantastic Days:" "Princess Connect Re:Dive Japan:" "World Flipper Japan:" "Project Sekai: Colorful Stage:")
-    echo_Result ${result} ${array}
-    echo "======================================="
-
-}
-
 function Global_UnlockTest() {
-    if [[ "$1" == 4 ]] || [[ "$Stype" == "force6" ]];then
+    #if [[ "$1" == 4 ]] || [[ "$Stype" == "force6" ]];then
+    #    local result=$(
+    #    MediaUnlockTest_DisneyPlus ${1} &
+    #    MediaUnlockTest_Netflix ${1} &
+    #    )
+    #else
         local result=$(
         MediaUnlockTest_DisneyPlus ${1} &
         MediaUnlockTest_Netflix ${1} &
         )
-    else
-        local result=$(
-        MediaUnlockTest_DisneyPlus ${1} &
-        MediaUnlockTest_Netflix ${1} &
-        )
-    fi
+    #fi
     wait
     local array=("Disney+:" "Netflix:" )
     echo_Result ${result} ${array}
@@ -515,146 +471,6 @@ function SA_UnlockTest() {
     )
     wait
     local array=("Star+:" "HBO Max:" "DirecTV Go:" "Funimation:")
-    echo_Result ${result} ${array}
-    echo "======================================="
-}
-
-function OA_UnlockTest() {
-    echo "==============[ Oceania ]=============="
-    local result=$(
-    MediaUnlockTest_NBATV ${1} &
-    MediaUnlockTest_AcornTV ${1} &
-    MediaUnlockTest_SHOWTIME ${1} &
-    MediaUnlockTest_BritBox ${1} &
-    MediaUnlockTest_Funimation ${1} &
-    MediaUnlockTest_ParamountPlus ${1} &
-    )
-    wait
-    local array=("NBA TV:" "Acorn TV:" "SHOWTIME:" "BritBox:" "Funimation:" "Paramount+:")
-    echo_Result ${result} ${array}
-    ShowRegion AU
-    local result=$(
-    MediaUnlockTest_Stan ${1} &
-    MediaUnlockTest_Binge ${1} &
-    MediaUnlockTest_7plus ${1} &
-    MediaUnlockTest_Channel9 ${1} &
-    MediaUnlockTest_Channel10 ${1} &
-    MediaUnlockTest_ABCiView ${1} &
-    MediaUnlockTest_OptusSports ${1} &
-    MediaUnlockTest_SBSonDemand ${1} &
-    )
-    wait
-    echo "$result" | grep "Stan:"
-    echo "$result" | grep "Binge:"
-    MediaUnlockTest_Docplay ${1}
-    local array=("7plus:" "Channel 9:" "Channel 10:" "ABC iView:")
-    echo_Result ${result} ${array}
-    MediaUnlockTest_KayoSports ${1}
-    echo "$result" | grep "Optus Sports:"
-    echo "$result" | grep "SBS on Demand:"
-    ShowRegion NZ
-    local result=$(
-    MediaUnlockTest_NeonTV ${1} &
-    MediaUnlockTest_SkyGONZ ${1} &
-    MediaUnlockTest_ThreeNow ${1} &
-    MediaUnlockTest_MaoriTV ${1} &
-    )
-    wait
-    local array=("Neon TV:" "SkyGo NZ:" "ThreeNow:" "Maori TV:")
-    echo_Result ${result} ${array}
-    echo "======================================="
-}
-
-function KR_UnlockTest() {
-    echo "==============[ Korean ]==============="
-    local result=$(
-    MediaUnlockTest_Wavve ${1} &
-    MediaUnlockTest_Tving ${1} &
-    MediaUnlockTest_CoupangPlay ${1} &
-    MediaUnlockTest_NaverTV ${1} &
-    MediaUnlockTest_Afreeca ${1} &
-    MediaUnlockTest_KBSDomestic ${1} &
-    #MediaUnlockTest_KOCOWA ${1} &
-    )
-    wait
-    local array=("Wavve:" "Tving:" "Coupang Play:" "Naver TV:" "Afreeca TV:" "KBS Domestic:")
-    echo_Result ${result} ${array}
-    echo "======================================="
-}
-
-function SEA_UnlockTest(){
-    echo "==========[ SouthEastAsia ]============"
-    local result=$(
-    MediaUnlockTest_HBOGO_ASIA ${1} &
-    MediaUnblockTest_BGlobalSEA ${1} &
-    )
-    wait
-    local array=("HBO GO Asia:" "B-Global SouthEastAsia:")
-    echo_Result ${result} ${array}
-    ShowRegion SG
-    local result=$(
-        MediaUnlockTest_Catchplay ${1} &
-        MediaUnlockTest_meWATCH ${1} &
-        MediaUnlockTest_StarhubTVPlus ${1} &
-    )
-    wait
-    local array=("meWATCH" "Starhub" "CatchPlay+:")
-    echo_Result ${result} ${array}
-    ShowRegion TH
-    local result=$(
-    #MediaUnlockTest_TrueID ${1} &
-    MediaUnlockTest_AISPlay ${1} &
-    MediaUnblockTest_BGlobalTH ${1} &
-    )
-    wait
-    local array=("TrueID" "AIS Play" "B-Global Thailand Only")
-    echo_Result ${result} ${array}
-    ShowRegion ID
-    local result=$(
-    MediaUnlockTest_Vidio ${1} &
-    MediaUnblockTest_BGlobalID ${1} &
-    )
-    wait
-    local array=("Vidio" "B-Global Indonesia Only")
-    echo_Result ${result} ${array}
-    ShowRegion VN
-    local result=$(
-    # MediaUnlockTest_VTVcab ${1} &
-    MediaUnlockTest_MYTV ${1} &
-    MediaUnlockTest_ClipTV ${1} &
-    MediaUnlockTest_GalaxyPlay ${1} &
-    MediaUnblockTest_BGlobalVN ${1} &
-    )
-    wait
-    local array=("MYTV" "Clip TV" "Galaxy Play" "B-Global Việt Nam Only" )
-    echo_Result ${result} ${array}
-    ShowRegion IN
-    local result=$(
-    MediaUnlockTest_MXPlayer ${1} &
-    MediaUnlockTest_TataPlay ${1} &
-    )
-    wait
-    local array=("MXPlayer" "Tata Play" )
-    echo_Result ${result} ${array}
-    echo "======================================="
-}
-
-function Sport_UnlockTest() {
-    echo "===============[ Sport ]==============="
-    local result=$(
-    MediaUnlockTest_Dazn ${1} &
-    MediaUnlockTest_StarPlus ${1} &
-    MediaUnlockTest_ESPNPlus ${1} &
-    MediaUnlockTest_NBATV ${1} &
-    MediaUnlockTest_FuboTV ${1} &
-    MediaUnlockTest_MolaTV ${1} &
-    MediaUnlockTest_SetantaSports ${1} &
-    MediaUnlockTest_OptusSports ${1} &
-    MediaUnlockTest_BeinConnect ${1} &
-    MediaUnlockTest_EurosportRO ${1} &
-    )
-    wait
-    local array=("Dazn:" "Star+:" "ESPN+:" "NBA TV:" "Fubo TV:" "Mola TV:" "Setanta Sports:" "Optus Sports:" "Bein Sports Connect:" "Eurosport RO:")
     echo_Result ${result} ${array}
     echo "======================================="
 }
@@ -758,7 +574,7 @@ clear
 function RunScript() {
             clear
             #ScriptTitle
-            CheckV6
+            #CheckV6
             if [[ "$isv6" -eq 1 ]]; then
                 Global_UnlockTest 6
                 #SEA_UnlockTest 6
