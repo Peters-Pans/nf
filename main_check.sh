@@ -312,80 +312,6 @@ function MediaUnlockTest_DisneyPlus() {
 
 }
 
-function MediaUnlockTest_NetflixCDN() {
-    if [[ "$1" == "6" ]]; then
-        local nf_web_ip=$(dig www.netflix.com AAAA +noall +answer +nottl | grep -E "IN\s*AAAA" | awk '{print $4}' | head -1)
-    else
-        local nf_web_ip=$(dig www.netflix.com A +noall +answer +nottl | grep -E "IN\s*A" | awk '{print $4}' | head -1)
-    fi
-    if [ ! -n "$nf_web_ip" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Null${Font_Suffix}\n"
-        return
-    else
-        local nf_web_isp=$(detect_isp $nf_web_ip)
-        if [[ ! "$nf_web_isp" == *"Amazon"* ]] && [[ ! "$nf_web_isp" == *"Netflix"* ]]; then
-            echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Hijacked with [$nf_web_isp]${Font_Suffix}\n"
-            return
-        fi
-    fi
-    local tmpresult=$(curl $curlArgs -${1} -s --max-time 10 "https://api.fast.com/netflix/speedtest/v2?https=true&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=1" 2>&1)
-    if [ -z "$tmpresult" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed${Font_Suffix}\n"
-        return
-    elif [ -n "$(echo $tmpresult | grep '>403<')" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (IP Banned By Netflix)${Font_Suffix}\n"
-        return
-    fi
-
-    local CDNAddr=$(echo $tmpresult | sed 's/.*"url":"//' | cut -f3 -d"/")
-    if [[ "$1" == "6" ]]; then
-        nslookup -q=AAAA $CDNAddr >~/v6_addr.txt
-        ifAAAA=$(cat ~/v6_addr.txt | grep 'AAAA address' | awk '{print $NF}')
-        if [ -z "$ifAAAA" ]; then
-            CDNIP=$(cat ~/v6_addr.txt | grep Address | sed -n '$p' | awk '{print $NF}')
-        else
-            CDNIP=${ifAAAA}
-        fi
-    else
-        CDNIP=$(nslookup $CDNAddr | sed '/^\s*$/d' | awk 'END {print}' | awk '{print $2}')
-    fi
-
-    if [ -z "$CDNIP" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}Failed (CDN IP Not Found)${Font_Suffix}\n"
-        rm -rf ~/v6_addr.txt
-        return
-    fi
-
-    local CDN_ISP=$(curl $curlArgs --user-agent "${UA_Browser}" -s --max-time 20 "https://api.ip.sb/geoip/$CDNIP" 2>&1 | python -m json.tool 2>/dev/null | grep 'isp' | cut -f4 -d'"')
-    local iata=$(echo $CDNAddr | cut -f3 -d"-" | sed 's/.\{3\}$//' | tr [:lower:] [:upper:])
-
-    local IATACode2=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/1-stream/RegionRestrictionCheck/main/reference/IATACode2.txt" 2>&1)
-
-    local isIataFound1=$(echo "$IATACode" | grep $iata)
-    local isIataFound2=$(echo "$IATACode2" | grep $iata)
-
-    if [ -n "$isIataFound1" ]; then
-        local lineNo=$(echo "$IATACode" | cut -f3 -d"|" | sed -n "/${iata}/=")
-        local location=$(echo "$IATACode" | awk "NR==${lineNo}" | cut -f1 -d"|" | sed -e 's/^[[:space:]]*//')
-    elif [ -z "$isIataFound1" ] && [ -n "$isIataFound2" ]; then
-        local lineNo=$(echo "$IATACode2" | awk '{print $1}' | sed -n "/${iata}/=")
-        local location=$(echo "$IATACode2" | awk "NR==${lineNo}" | cut -f2 -d"," | sed -e 's/^[[:space:]]*//' | tr [:upper:] [:lower:] | sed 's/\b[a-z]/\U&/g')
-    fi
-
-    if [ -n "$location" ] && [[ "$CDN_ISP" == "Netflix Streaming Services" ]]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Green}$location ${Font_Suffix}\n"
-        rm -rf ~/v6_addr.txt
-        return
-    elif [ -n "$location" ] && [[ "$CDN_ISP" != "Netflix Streaming Services" ]]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Yellow}Associated with [$CDN_ISP] in [$location]${Font_Suffix}\n"
-        rm -rf ~/v6_addr.txt
-        return
-    elif [ -n "$location" ] && [ -z "$CDN_ISP" ]; then
-        echo -n -e "\r Netflix Preferred CDN:\t\t\t${Font_Red}No ISP Info Founded${Font_Suffix}\n"
-        rm -rf ~/v6_addr.txt
-        return
-    fi
-}
 
 function echo_Result() {
     for((i=0;i<${#array[@]};i++))
@@ -563,10 +489,10 @@ function RunScript() {
             #ScriptTitle
             CheckV6
             if [[ "$isv6" -eq 1 ]]; then
-                Global_UnlockTest 6
+	    	MediaUnlockTest_Netflix
+                #Global_UnlockTest 6
                 #SEA_UnlockTest 6
             fi
         #clear
 }
-MediaUnlockTest_Netflix
-#RunScript
+RunScript
