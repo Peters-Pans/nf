@@ -493,44 +493,17 @@ function Global_UnlockTest() {
     echo "============[ Multination ]============"
     if [[ "$1" == 4 ]] || [[ "$Stype" == "force6" ]];then
         local result=$(
-        MediaUnlockTest_Dazn ${1} &
-        MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_DisneyPlus ${1} &
         MediaUnlockTest_Netflix ${1} &
-        MediaUnlockTest_YouTube_Premium ${1} &
-        MediaUnlockTest_PrimeVideo_Region ${1} &
-        MediaUnlockTest_TVBAnywhere ${1} &
-        MediaUnlockTest_iQYI_Region ${1} &
-        MediaUnlockTest_Viu.com ${1} &
-        MediaUnlockTest_YouTube_CDN ${1} &
-        MediaUnlockTest_NetflixCDN ${1} &
-        MediaUnlockTest_Spotify ${1} &
-        #MediaUnlockTest_Instagram.Music ${1}
-        GameTest_Steam ${1} &
-        MediaUnlockTest_Google ${1} &
-        MediaUnlockTest_Tiktok ${1} &
         )
     else
         local result=$(
-        # MediaUnlockTest_Dazn ${1} &
-        MediaUnlockTest_HotStar ${1} &
         MediaUnlockTest_DisneyPlus ${1} &
         MediaUnlockTest_Netflix ${1} &
-        MediaUnlockTest_YouTube_Premium ${1} &
-        # MediaUnlockTest_PrimeVideo_Region ${1} &
-        # MediaUnlockTest_TVBAnywhere ${1} &
-        # MediaUnlockTest_iQYI_Region ${1} &
-        # MediaUnlockTest_Viu.com ${1} &
-        MediaUnlockTest_YouTube_CDN ${1} &
-        MediaUnlockTest_NetflixCDN ${1} &
-        MediaUnlockTest_Spotify ${1} &
-        #MediaUnlockTest_Instagram.Music ${1}
-        # GameTest_Steam ${1} &
-        MediaUnlockTest_Google ${1} &
         )
     fi
     wait
-    local array=("Dazn:" "HotStar:" "Disney+:" "Netflix:" "YouTube Premium:" "Amazon Prime Video:" "TVBAnywhere+:" "iQyi Oversea:" "Viu.com:" "Tiktok" "YouTube CDN:" "Google" "YouTube Region:" "Netflix Preferred CDN:" "Spotify Registration:" "Steam Currency:")
+    local array=("Disney+:" "Netflix:" )
     echo_Result ${result} ${array}
     echo "======================================="
 }
