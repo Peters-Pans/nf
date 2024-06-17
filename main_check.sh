@@ -445,17 +445,17 @@ function TW_UnlockTest() {
 }
 
 function Global_UnlockTest() {
-    #if [[ "$1" == 4 ]] || [[ "$Stype" == "force6" ]];then
-    #    local result=$(
-    #    MediaUnlockTest_DisneyPlus ${1} &
-    #    MediaUnlockTest_Netflix ${1} &
-    #    )
-    #else
+    if [[ "$1" == 4 ]] || [[ "$Stype" == "force6" ]];then
         local result=$(
         MediaUnlockTest_DisneyPlus ${1} &
         MediaUnlockTest_Netflix ${1} &
         )
-    #fi
+    else
+        local result=$(
+        MediaUnlockTest_DisneyPlus ${1} &
+        MediaUnlockTest_Netflix ${1} &
+        )
+    fi
     wait
     local array=("Disney+:" "Netflix:" )
     echo_Result ${result} ${array}
