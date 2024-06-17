@@ -800,17 +800,6 @@ function RunScript() {
                 SEA_UnlockTest 6
             fi
         #clear
-        if [[ "$isv6" -eq 1 ]]; then
-            Global_UnlockTest 6
-            TW_UnlockTest 6
-            HK_UnlockTest 6
-            JP_UnlockTest 6
-            NA_UnlockTest 6
-            SA_UnlockTest 6
-            EU_UnlockTest 6
-            OA_UnlockTest 6
-            KR_UnlockTest 6
-        fi
 }
 
 RunScript
