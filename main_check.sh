@@ -489,8 +489,6 @@ function JP_UnlockTest() {
 }
 
 function Global_UnlockTest() {
-    echo ""
-    echo "============[ Multination ]============"
     if [[ "$1" == 4 ]] || [[ "$Stype" == "force6" ]];then
         local result=$(
         MediaUnlockTest_DisneyPlus ${1} &
@@ -505,7 +503,6 @@ function Global_UnlockTest() {
     wait
     local array=("Disney+:" "Netflix:" )
     echo_Result ${result} ${array}
-    echo "======================================="
 }
 
 function SA_UnlockTest() {
@@ -746,8 +743,6 @@ function CheckV6() {
         else
             check6=$(curl $curlArgs cloudflare.com/cdn-cgi/trace -6 -s 2>&1)
             if [ -n  "$check6"  ]; then
-                echo ""
-                echo ""
                 echo -e " ${Font_SkyBlue}当前网络为: ${local_isp6} (${local_ipv6_asterisk})${Font_Suffix} "
                 isv6=1
             else
