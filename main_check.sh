@@ -568,5 +568,5 @@ function RunScript() {
             fi
         #clear
 }
-
-RunScript
+MediaUnlockTest_Netflix
+#RunScript
