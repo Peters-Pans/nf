@@ -794,11 +794,6 @@ function CheckV6() {
 function RunScript() {
             #clear
             ScriptTitle
-            CheckV4
-            if [[ "$isv4" -eq 1 ]]; then
-                Global_UnlockTest 4
-                SEA_UnlockTest 4
-            fi
             CheckV6
             if [[ "$isv6" -eq 1 ]]; then
                 Global_UnlockTest 6
